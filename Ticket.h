@@ -19,6 +19,7 @@ public:
 
     void book();
     void unbook();
+    friend std::ostream &operator<<(std::ostream &out, const Ticket &ticket);
 
     ~Ticket();
 };

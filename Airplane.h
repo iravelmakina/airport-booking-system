@@ -20,6 +20,9 @@ public:
              std::vector<bool> &seatsAvailability, const std::map<std::string, int> &priceRange,
              std::map<std::string, Ticket> &tickets);
 
+    void calculateTicketPrice();
+    friend std::ostream &operator<<(std::ostream &out, const Airplane &airplane);
+
     ~Airplane();
 };
 

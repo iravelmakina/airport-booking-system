@@ -16,4 +16,11 @@ void Ticket::unbook() {
     status = false;
 }
 
+std::ostream &operator<<(std::ostream &out, const Ticket &ticket) {
+    out << "Ticket(ID: " << ticket.id << ", Username: " << ticket.username << ", Date: " << ticket.date
+            << ", Flight Number: " << ticket.flightNumber << ", Seat: " << ticket.seat
+            << ", Price: $" << ticket.price << ", Status: " << (ticket.status ? "Booked" : "Unbooked") << ")";
+    return out;
+}
+
 Ticket::~Ticket() = default;
