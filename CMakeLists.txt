@@ -3,4 +3,8 @@ project(airport_booking_system)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(airport_booking_system main.cpp)
+add_executable(airport_booking_system main.cpp
+        Airplane.cpp
+        Airplane.cpp
+        Ticket.h
+        Ticket.cpp)
