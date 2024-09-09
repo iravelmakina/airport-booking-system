@@ -1,58 +1,88 @@
 #include "Airplane.h"
 
-Airplane::Airplane(const std::string &date, const std::string &flightNumber, int seatsPerRow,
-                   std::vector<bool> &seatsAvailability, const std::map<std::string, int> &priceRange,
-                   std::map<std::string, Ticket> tickets) : date(date), flightNumber(flightNumber),
-                                                            seatsPerRow(seatsPerRow),
-                                                            seatsAvailability(seatsAvailability),
-                                                            priceRange(priceRange), tickets(tickets) {}
-
-void Airplane::createTicket(int id, const std::string &username, const std::string &date,
-                            const std::string &flightNumber, const std::string &seat, int price, bool isBooked) {
-    tickets[seat] = Ticket(id, username, date, flightNumber, seat, price, isBooked);
+// memory: O(n), time: O(n)
+Airplane::Airplane(const std::string &date, const std::string &flightNumber, int seatsPerRow, int totalRows,
+                   const std::unordered_map<int, int> &priceRange) : date(date), flightNumber(flightNumber),
+                                                                     seatsPerRow(seatsPerRow), totalRows(totalRows),
+                                                                     seatsAvailability(seatsPerRow * totalRows, true),
+                                                                     priceRange(priceRange) {
 }
 
+// maybe it will be better to create two separate vectors booked and free
 
-// also good to make a sep vector with booked seats
-void Airplane::showAvailableSeatsWithPrices() const {
-    for (size_t i = 0; i < seatsAvailability.size(); i++) {
-        if (seatsAvailability[i]) {
-            std::string seat = indexToSeat(static_cast<int>(i));
-            std::cout << seat << " " << calculateSeatPrice(seat) << "$" << ", ";
+int Airplane::nextTicketId = 1;
+
+
+void Airplane::showAvailableSeatsWithPrices() const { // memory: O(1), time: O(n)
+    for (int seatIndex = 0; seatIndex < seatsAvailability.size(); ++seatIndex) {
+        if (seatsAvailability[seatIndex]) {
+            std::string seatId = indexToSeat(seatIndex);
+            int row = (seatIndex / seatsPerRow) + 1; // repeats!!!
+            int price = priceRange.at(row);
+            std::cout << seatId << " " << price << "$, ";
         }
     }
+    std::cout << std::endl;
+} // just for check
+
+
+// show booked tickets
+std::vector<int> Airplane::getBookedSeatsId() const { // memory: O(1), time: O(n)
+    std::vector<int> seatsIdVector;
+    for (int seatIndex = 0; seatIndex < seatsAvailability.size(); ++seatIndex) {
+        if (!seatsAvailability[seatIndex]) {
+            // indextoseat
+            std::string seatId = indexToSeat(seatIndex);
+            seatsIdVector.push_back(seatToTicket.at(seatId));
+        }
+    }
+    return seatsIdVector;
 }
 
 
-// can be optimized to binary search
-int Airplane::calculateSeatPrice(const std::string &seat) const {
-    int rowNumber = std::stoi(seat.substr(0, seat.size() - 1));
+int Airplane::bookSeatGetId(const std::string &seat) { // memory: O(1), time: O(1)
+    int seatIndex = seatToIndex(seat);
 
-    for (const auto &range: priceRange) {
-        std::string rangeStr = range.first;
-        int price = range.second;
-
-        size_t dashPos = rangeStr.find('-');
-        int startRange = std::stoi(rangeStr.substr(0, dashPos));
-        int endRange = std::stoi(rangeStr.substr(dashPos + 1));
-
-        if (rowNumber >= startRange && rowNumber <= endRange) {
-            return price;
-        }
+    if (seatsAvailability[seatIndex]) {
+        seatsAvailability[seatIndex] = false;
+        int currentTicketId = nextTicketId++;
+        seatToTicket[seat] = currentTicketId;
+        return currentTicketId;
     }
     return -1;
+} // then create ticket with this id
+
+
+void Airplane::unbookSeat(const std::string &seat) { // memory: O(1), time: O(1)
+    int seatIndex = seatToIndex(seat);
+
+    if (!seatsAvailability[seatIndex]) {
+        seatsAvailability[seatIndex] = true;
+        seatToTicket.erase(seat);
+    }
+} // then find it in 2 other maps and delete. output its price
+
+
+// helper to convert seat index to seat ID
+std::string Airplane::indexToSeat(int index) const { // memory: O(1), time: O(1)
+    int row = (index / seatsPerRow) + 1;
+    char seatLetter = static_cast<char>('A' + (index % seatsPerRow));
+    return std::to_string(row) + seatLetter;
 }
 
 
-std::string Airplane::indexToSeat(int index) const {
-    int rowNumber = (index / seatsPerRow) + 1;
-    char seatLetter = static_cast<char>('A' + (index % seatsPerRow));
-    return std::to_string(rowNumber) + seatLetter;
-} // perfect
+// helper to convert seat ID to seat index
+int Airplane::seatToIndex(const std::string &seatId) const { // memory: O(1), time: O(1)
+    int row = std::stoi(seatId.substr(0, seatId.size() - 1));
+    char seatLetter = seatId.back();
+    return (row - 1) * seatsPerRow + (seatLetter - 'A');
+}
 
 
 std::ostream &operator<<(std::ostream &out, const Airplane &airplane) {
     out << "Airplane(Date: " << airplane.date << ", Flight Number: " << airplane.flightNumber << ", Seats per Row: " <<
+        airplane.seatsPerRow << ", Total Rows: " <<
+        airplane.totalRows << ", Seats per Row: " <<
             airplane.seatsPerRow << ")";
     return out;
 }

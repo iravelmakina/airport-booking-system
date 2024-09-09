@@ -1,7 +1,6 @@
-#ifndef AIRPLANE_H
-#define AIRPLANE_H
+#pragma once
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include "Ticket.h"
@@ -11,28 +10,30 @@ class Airplane {
     std::string date;
     std::string flightNumber;
     int seatsPerRow;
+    int totalRows;
+    std::unordered_map<int, int> priceRange;
     std::vector<bool> seatsAvailability;
-    std::map<std::string, int> priceRange;
-    std::map<std::string, Ticket> tickets;
+    std::unordered_map<std::string, int> seatToTicket;
+    static int nextTicketId;
 
-public:
-    Airplane(const std::string &date, const std::string &flightNumber, int seatsPerRow,
-             std::vector<bool> &seatsAvailability, const std::map<std::string, int> &priceRange,
-             std::map<std::string, Ticket> tickets = {});
-
-    void createTicket(int id, const std::string &username, const std::string &date, const std::string &flightNumber,
-                  const std::string &seat, int price, bool status);
-
-    int calculateSeatPrice(const std::string &seat) const;
 
     std::string indexToSeat(int index) const;
 
+    int seatToIndex(const std::string &seatId) const;
+
+public:
+    Airplane(const std::string &date, const std::string &flightNumber, int seatsPerRow, int totalRows,
+             const std::unordered_map<int, int> &priceRange);
+
+    int bookSeatGetId(const std::string &seat);
+
+    void unbookSeat(const std::string &seat);
+
     void showAvailableSeatsWithPrices() const;
+
+    std::vector<int> getBookedSeatsId() const;
 
     friend std::ostream &operator<<(std::ostream &out, const Airplane &airplane);
 
     ~Airplane();
 };
-
-
-#endif //AIRPLANE_H
