@@ -11,11 +11,13 @@ class Ticket {
     std::string flightNumber;
     std::string seat;
     int price;
-    bool status;
+    bool isBooked;
 
 public:
+    Ticket();
+
     Ticket(int id, const std::string &username, const std::string &date, const std::string &flightNumber,
-           const std::string &seat, int price, bool status);
+           const std::string &seat, int price, bool isBooked = true);
 
     void book();
     void unbook();
