@@ -14,13 +14,11 @@ class Ticket {
     bool isBooked;
 
 public:
-    Ticket();
+    Ticket(const std::string &username, const std::string &date, const std::string &flightNumber,
+           const std::string &seat, int price, bool isBooked);
 
-    Ticket(int id, const std::string &username, const std::string &date, const std::string &flightNumber,
-           const std::string &seat, int price, bool isBooked = true);
-
-    void book();
-    void unbook();
+    bool isNotAvailable() const;
+    void returnTicket();
     friend std::ostream &operator<<(std::ostream &out, const Ticket &ticket);
 
     ~Ticket();
