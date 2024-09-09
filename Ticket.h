@@ -1,8 +1,7 @@
-#ifndef TICKET_H
-#define TICKET_H
+#pragma once
 #include <iostream>
 #include <vector>
-
+// pragma
 
 class Ticket {
     int id;
@@ -11,19 +10,13 @@ class Ticket {
     std::string flightNumber;
     std::string seat;
     int price;
-    bool isBooked;
 
 public:
-    Ticket(const std::string &username, const std::string &date, const std::string &flightNumber,
-           const std::string &seat, int price, bool isBooked);
+    Ticket(int id, const std::string &username, const std::string &date, const std::string &flightNumber,
+           const std::string &seat, int price);
 
-    bool isNotAvailable() const;
-    void returnTicket();
+
     friend std::ostream &operator<<(std::ostream &out, const Ticket &ticket);
 
     ~Ticket();
 };
-
-
-
-#endif //TICKET_H
