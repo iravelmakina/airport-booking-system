@@ -4,7 +4,7 @@
 Ticket::Ticket(int id, const std::string &username, const std::string &date, const std::string &flightNumber,
                const std::string &seat, int price) : id(id), username(username), date(date),
                                                      flightNumber(flightNumber), seat(seat),
-                                                     price(price) {
+                                                     price(price) { // const for int?
 }
 
 

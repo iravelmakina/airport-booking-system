@@ -7,6 +7,7 @@
 
 
 class Airplane {
+private:
     std::string date;
     std::string flightNumber;
     int seatsPerRow;

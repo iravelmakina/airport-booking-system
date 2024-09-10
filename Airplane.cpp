@@ -1,4 +1,4 @@
-#include "Airplane.h"
+#include "Airplane.h" // think og getters/setters
 
 // memory: O(n), time: O(n)
 Airplane::Airplane(const std::string &date, const std::string &flightNumber, int seatsPerRow, int totalRows,
@@ -31,7 +31,6 @@ std::vector<int> Airplane::getBookedSeatsId() const { // memory: O(1), time: O(n
     std::vector<int> seatsIdVector;
     for (int seatIndex = 0; seatIndex < seatsAvailability.size(); ++seatIndex) {
         if (!seatsAvailability[seatIndex]) {
-            // indextoseat
             std::string seatId = indexToSeat(seatIndex);
             seatsIdVector.push_back(seatToTicket.at(seatId));
         }
