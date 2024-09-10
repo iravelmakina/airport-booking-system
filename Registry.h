@@ -27,5 +27,4 @@ public:
     void removeUserTicket(const std::string &username);
 
     const std::vector<int> getUserTickets(const std::string &username) const;
-
 };

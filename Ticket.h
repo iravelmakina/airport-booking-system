@@ -17,6 +17,4 @@ public:
 
 
     friend std::ostream &operator<<(std::ostream &out, const Ticket &ticket); // non-member?? can i use friend
-
-    ~Ticket();
 };

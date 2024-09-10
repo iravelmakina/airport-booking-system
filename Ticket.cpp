@@ -14,6 +14,3 @@ std::ostream &operator<<(std::ostream &out, const Ticket &ticket) {
             << ", Price: $" << ticket.price << ")";
     return out;
 }
-
-
-Ticket::~Ticket() = default;

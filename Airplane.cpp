@@ -85,6 +85,3 @@ std::ostream &operator<<(std::ostream &out, const Airplane &airplane) {
             airplane.seatsPerRow << ")";
     return out;
 }
-
-
-Airplane::~Airplane() = default;

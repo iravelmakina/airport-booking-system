@@ -35,6 +35,4 @@ public:
     std::vector<int> getBookedSeatsId() const;
 
     friend std::ostream &operator<<(std::ostream &out, const Airplane &airplane);
-
-    ~Airplane();
 };
