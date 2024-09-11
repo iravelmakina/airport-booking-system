@@ -1,4 +1,4 @@
-#include "Airplane.h" // think og getters/setters
+#include "Airplane.h" // think of getters/setters
 
 // memory: O(n), time: O(n)
 Airplane::Airplane(const std::string &date, const std::string &flightNumber, int seatsPerRow, int totalRows,
@@ -13,12 +13,17 @@ Airplane::Airplane(const std::string &date, const std::string &flightNumber, int
 int Airplane::nextTicketId = 1;
 
 
+int Airplane::getSeatPrice(const std::string &seat) const { // memory: O(1), time: O(1)
+    int row = std::stoi(seat.substr(0, seat.size() - 1));
+    return priceRange.at(row);
+}
+
+
 void Airplane::showAvailableSeatsWithPrices() const { // memory: O(1), time: O(n)
     for (int seatIndex = 0; seatIndex < seatsAvailability.size(); ++seatIndex) {
         if (seatsAvailability[seatIndex]) {
             std::string seatId = indexToSeat(seatIndex);
-            int row = (seatIndex / seatsPerRow) + 1; // repeats!!!
-            int price = priceRange.at(row);
+            int price = getSeatPrice(seatId); // repeat with row
             std::cout << seatId << " " << price << "$, ";
         }
     }

@@ -9,4 +9,6 @@ add_executable(airport_booking_system main.cpp
         Ticket.h
         Ticket.cpp
         Registry.h
-        Registry.cpp)
+        Registry.cpp
+        CommandPerformer.h
+        CommandPerformer.cpp)

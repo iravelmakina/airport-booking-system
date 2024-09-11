@@ -6,7 +6,6 @@
 
 
 class Registry {
-private:
     std::unordered_map<std::pair<std::string, std::string>, Airplane> airflightsRegistry;
     std::unordered_map<int, Ticket> ticketsRegistry;
     std::unordered_map<std::string, std::vector<int>> userToTicket;
@@ -14,7 +13,7 @@ private:
 public:
     void addAirplane(const std::string &date, const std::string &flightNumber, const Airplane &airplane);
 
-    const Airplane *getAirplane(const std::string &date, const std::string &flightNumber) const;
+    Airplane *getAirplane(const std::string &date, const std::string &flightNumber);
 
     void addTicket(int ticketId, const Ticket &ticket); // create ticket here
 
@@ -24,7 +23,7 @@ public:
 
     void addUserTicket(const std::string &username, int id);
 
-    void removeUserTicket(const std::string &username);
+    void removeUserTicket(const std::string &username, int id);
 
     const std::vector<int> getUserTickets(const std::string &username) const;
 };

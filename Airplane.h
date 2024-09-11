@@ -7,11 +7,6 @@
 
 
 class Airplane {
-private:
-    std::string date;
-    std::string flightNumber;
-    int seatsPerRow;
-    int totalRows;
     std::unordered_map<int, int> priceRange;
     std::vector<bool> seatsAvailability;
     std::unordered_map<std::string, int> seatToTicket;
@@ -23,8 +18,16 @@ private:
     int seatToIndex(const std::string &seatId) const;
 
 public:
+    std::string date;
+    std::string flightNumber;
+    int seatsPerRow;
+    int totalRows;
+
+
     Airplane(const std::string &date, const std::string &flightNumber, int seatsPerRow, int totalRows,
              const std::unordered_map<int, int> &priceRange);
+
+    int getSeatPrice(const std::string &seat) const;
 
     int bookSeatGetId(const std::string &seat);
 
