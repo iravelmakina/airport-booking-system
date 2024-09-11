@@ -23,6 +23,7 @@ public:
     int seatsPerRow;
     int totalRows;
 
+    Airplane() = default;
 
     Airplane(const std::string &date, const std::string &flightNumber, int seatsPerRow, int totalRows,
              const std::unordered_map<int, int> &priceRange);

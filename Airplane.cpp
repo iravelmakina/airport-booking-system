@@ -20,15 +20,20 @@ int Airplane::getSeatPrice(const std::string &seat) const { // memory: O(1), tim
 
 
 void Airplane::showAvailableSeatsWithPrices() const { // memory: O(1), time: O(n)
+    bool first = true;
     for (int seatIndex = 0; seatIndex < seatsAvailability.size(); ++seatIndex) {
         if (seatsAvailability[seatIndex]) {
+            if (!first) {
+                std::cout << ", ";
+            }
             std::string seatId = indexToSeat(seatIndex);
-            int price = getSeatPrice(seatId); // repeat with row
-            std::cout << seatId << " " << price << "$, ";
+            int price = getSeatPrice(seatId);
+            std::cout << seatId << " " << price << "$";
+            first = false;
         }
     }
     std::cout << std::endl;
-} // just for check
+}
 
 
 // show booked tickets

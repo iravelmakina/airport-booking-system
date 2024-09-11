@@ -1,14 +1,15 @@
 #pragma once
 #include <iostream>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "Airplane.h"
 
 
 class Registry {
-    std::unordered_map<std::pair<std::string, std::string>, Airplane> airflightsRegistry;
+    std::unordered_map<std::string, Airplane> airflightsRegistry;
     std::unordered_map<int, Ticket> ticketsRegistry;
-    std::unordered_map<std::string, std::vector<int>> userToTicket;
+    std::unordered_map<std::string, std::unordered_set<int>> userToTicket;
 
 public:
     void addAirplane(const std::string &date, const std::string &flightNumber, const Airplane &airplane);
@@ -25,5 +26,5 @@ public:
 
     void removeUserTicket(const std::string &username, int id);
 
-    const std::vector<int> getUserTickets(const std::string &username) const;
+    const std::unordered_set<int> getUserTickets(const std::string &username) const;
 };
