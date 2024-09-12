@@ -1,9 +1,9 @@
 #pragma once
-#include <iostream>
 #include <unordered_map>
 #include <unordered_set>
 
 #include "Airplane.h"
+#include "Ticket.h"
 
 
 class Registry {
@@ -16,7 +16,7 @@ public:
 
     Airplane *getAirplane(const std::string &date, const std::string &flightNumber);
 
-    void addTicket(int ticketId, const Ticket &ticket); // create ticket here
+    void addTicket(int ticketId, const Ticket &ticket);
 
     void removeTicket(int ticketId);
 
@@ -26,5 +26,5 @@ public:
 
     void removeUserTicket(const std::string &username, int id);
 
-    const std::unordered_set<int> getUserTickets(const std::string &username) const;
+    std::unordered_set<int> getUserTickets(const std::string &username) const;
 };
