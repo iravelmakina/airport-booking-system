@@ -1,15 +1,11 @@
 #pragma once
-#include <iostream>
 
 #include "Airplane.h"
 #include "Registry.h"
 
 class FileReader {
-    std::string filePath;
+    static Airplane processFlightRecord(const std::string &line);
 
-    static Airplane parseFlightRecord(const std::string &line);
 public:
-    explicit FileReader(const std::string &filePath): filePath(filePath) {}
-
-    void parseFile(Registry &registry) const;
+    static bool processFile(const std::string &path, Registry &registry);
 };

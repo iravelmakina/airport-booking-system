@@ -1,14 +1,16 @@
-#include "FileReader.h"
-
+#include <iostream>
 #include <fstream>
 #include <sstream>
 
+#include "FileReader.h"
 
-void FileReader::parseFile(Registry &registry) const {
-    std::ifstream configFile(filePath);
+
+bool FileReader::processFile(const std::string &path, Registry &registry) {
+    // memory: O(n * m), time: O(n * m)
+    std::ifstream configFile(path);
     if (!configFile.is_open()) {
-        std::cerr << "Failed to open the file." << std::endl;
-        return;
+        std::cerr << "Error: Failed to open the file." << std::endl;
+        return false;
     }
 
     std::string line;
@@ -20,17 +22,20 @@ void FileReader::parseFile(Registry &registry) const {
         if (lineStream >> numberOfRecords) {
             for (int i = 0; i < numberOfRecords; ++i) {
                 std::getline(configFile, line);
-                Airplane airplane = parseFlightRecord(line);
+                Airplane airplane = processFlightRecord(line);
                 registry.addAirplane(airplane.date, airplane.flightNumber, airplane);
             }
         } else {
             std::cerr << "Error: Failed to read flight record." << std::endl;
+            return false;
         }
     }
     configFile.close();
+    return true;
 }
 
-Airplane FileReader::parseFlightRecord(const std::string &line) {
+Airplane FileReader::processFlightRecord(const std::string &line) {
+    // memory: O(m), time: O(m)
     std::istringstream lineStream(line);
 
     std::string date, flightNumber;
@@ -53,5 +58,5 @@ Airplane FileReader::parseFlightRecord(const std::string &line) {
         }
     }
 
-    return Airplane(date, flightNumber, seatsPerRow, maxRow, priceRange);
+    return {date, flightNumber, seatsPerRow, maxRow, priceRange};
 }
