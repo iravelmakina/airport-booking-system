@@ -7,7 +7,7 @@
 
 int main() {
     std::unique_ptr<Registry> registry(new Registry());
-    if (!FileReader::processFile("Config.txt", *registry)) {
+    if (!FileReader::processFile("../Config.txt", *registry)) {
         return 1;
     }
 
