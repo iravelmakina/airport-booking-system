@@ -1,9 +1,6 @@
 #pragma once
-#include <iostream>
 #include <unordered_map>
 #include <vector>
-
-#include "Ticket.h"
 
 
 class Airplane {
@@ -30,13 +27,13 @@ public:
 
     int getSeatPrice(const std::string &seat) const;
 
+    std::string getAvailableSeatsWithPrices() const;
+
     int bookSeatGetId(const std::string &seat);
 
-    void unbookSeat(const std::string &seat);
-
-    void showAvailableSeatsWithPrices() const;
+    bool tryUnbookSeat(const std::string &seat);
 
     std::vector<int> getBookedSeatsId() const;
-
-    friend std::ostream &operator<<(std::ostream &out, const Airplane &airplane);
 };
+
+std::ostream &operator<<(std::ostream &out, const Airplane &airplane);

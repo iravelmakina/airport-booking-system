@@ -1,6 +1,7 @@
 #pragma once
-#include <iostream>
 #include <vector>
+
+#include <iostream>
 
 class Ticket {
 public:
@@ -14,8 +15,7 @@ public:
     Ticket() = default;
 
     Ticket(int id, const std::string &username, const std::string &date, const std::string &flightNumber,
-           const std::string &seat, int price); // i have const and & everywhere in constructor, except int. why? ask const before
-
-
-    friend std::ostream &operator<<(std::ostream &out, const Ticket &ticket); // non-member?? can i use friend
+           const std::string &seat, int price);
 };
+
+std::ostream &operator<<(std::ostream &out, const Ticket &ticket);
