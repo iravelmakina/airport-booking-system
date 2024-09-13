@@ -27,14 +27,18 @@ void CommandPerformer::book(const std::string &date, const std::string &flightNu
     Airplane *airplane = getAirplaneOrError(date, flightNumber);
     if (airplane) {
         const int bookedTicketId = airplane->bookSeatGetId(seat);
-        if (bookedTicketId != -1) {
-            const Ticket ticket(bookedTicketId, username, date, flightNumber, seat, airplane->getSeatPrice(seat));
-            registry->addTicket(bookedTicketId, ticket);
-            registry->addUserTicket(username, bookedTicketId);
-            std::cout << "Confirmed with ID " << bookedTicketId << std::endl;
-        } else {
-            std::cerr << "Error: Seat " << seat << " is already booked." << std::endl;
+        if (bookedTicketId == -1) {
+            std::cout << "Error: Invalid seat " << seat << std::endl;
+            return;
         }
+        if (bookedTicketId == -2) {
+            std::cout << "Error: Seat " << seat << " is already booked." << std::endl;
+            return;
+        }
+        const Ticket ticket(bookedTicketId, username, date, flightNumber, seat, airplane->getSeatPrice(seat));
+        registry->addTicket(bookedTicketId, ticket);
+        registry->addUserTicket(username, bookedTicketId);
+        std::cout << "Confirmed with ID " << bookedTicketId << std::endl;
     }
 }
 
@@ -50,11 +54,23 @@ void CommandPerformer::unbook(const int id) const {
                 registry->removeTicket(id);
                 registry->removeUserTicket(ticket->username, ticket->id);
             } else {
-                std::cerr << "Error: Seat " << ticket->seat << " was not booked and cannot be unbooked." << std::endl;
+                std::cout << "Error: Seat " << ticket->seat << " was not booked and cannot be unbooked." << std::endl;
             }
         }
     } else {
-        std::cerr << "Error: Ticket with ID " << id << " not found." << std::endl;
+        std::cout << "Error: Ticket with ID " << id << " not found." << std::endl;
+    }
+}
+
+
+void CommandPerformer::view(const int id) const {
+    // memory: O(1), time: O(1)
+    const Ticket *ticket = registry->getTicket(id);
+    if (ticket) {
+        std::cout << "Flight " << ticket->flightNumber << ", " << ticket->date << ", seat " << ticket->seat << ", " <<
+                ticket->price << "$, " << ticket->username << std::endl;
+    } else {
+        std::cout << "Error: Ticket with ID " << id << " not found." << std::endl;
     }
 }
 
@@ -71,19 +87,7 @@ void CommandPerformer::view(const std::string &username) const {
                     seat << ", price " << ticket->price << "$" << std::endl;
         }
     } else {
-        std::cerr << "Error: No tickets found for user " << username << std::endl;
-    }
-}
-
-
-void CommandPerformer::view(const int id) const {
-    // memory: O(1), time: O(1)
-    const Ticket *ticket = registry->getTicket(id);
-    if (ticket) {
-        std::cout << "Flight " << ticket->flightNumber << ", " << ticket->date << ", seat " << ticket->seat << ", " <<
-                ticket->price << "$" << std::endl;
-    } else {
-        std::cerr << "Error: Ticket with ID " << id << " not found." << std::endl;
+        std::cout << "Error: No tickets found for user " << username << std::endl;
     }
 }
 
@@ -99,7 +103,7 @@ void CommandPerformer::view(const std::string &date, const std::string &flightNu
                 std::cout << ticket->seat << " " << ticket->username << " " << ticket->price << "$" << std::endl;
             }
         } else {
-            std::cerr << "Error: No seats are booked for flight " << flightNumber << " on date " << date << std::endl;
+            std::cout << "Error: No seats are booked for flight " << flightNumber << " on date " << date << std::endl;
         }
     }
 }
@@ -109,7 +113,7 @@ Airplane *CommandPerformer::getAirplaneOrError(const std::string &date, const st
     // memory: O(1), time: O(1)
     Airplane *airplane = registry->getAirplane(date, flightNumber);
     if (!airplane) {
-        std::cerr << "Error: Airplane not found for date " << date << " and flight number " << flightNumber <<
+        std::cout << "Error: Airplane not found for date " << date << " and flight number " << flightNumber <<
                 std::endl;
     }
     return airplane;

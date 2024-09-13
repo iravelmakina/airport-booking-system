@@ -41,6 +41,9 @@ std::string Airplane::getAvailableSeatsWithPrices() const {
 int Airplane::bookSeatGetId(const std::string &seat) {
     // memory: O(1), time: O(1)
     const int seatIndex = seatToIndex(seat);
+    if (seatIndex == -1) {
+        return -1;
+    }
 
     if (seatsAvailability[seatIndex]) {
         seatsAvailability[seatIndex] = false;
@@ -48,7 +51,7 @@ int Airplane::bookSeatGetId(const std::string &seat) {
         seatToTicket[seat] = currentTicketId;
         return currentTicketId;
     }
-    return -1;
+    return -2;
 }
 
 
@@ -92,6 +95,9 @@ int Airplane::seatToIndex(const std::string &seatId) const {
     // memory: O(1), time: O(1)
     const int row = std::stoi(seatId.substr(0, seatId.size() - 1));
     const char seatLetter = seatId.back();
+    if (row < 1 || row > totalRows || seatLetter < 'A' || seatLetter >= 'A' + seatsPerRow) {
+        return -1;
+    }
     return (row - 1) * seatsPerRow + (seatLetter - 'A');
 }
 

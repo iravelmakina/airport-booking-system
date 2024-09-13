@@ -9,7 +9,7 @@ bool FileReader::processFile(const std::string &path, Registry &registry) {
     // memory: O(n * m), time: O(n * m)
     std::ifstream configFile(path);
     if (!configFile.is_open()) {
-        std::cerr << "Error: Failed to open the file." << std::endl;
+        std::cout << "Error: Failed to open the file." << std::endl;
         return false;
     }
 
@@ -26,7 +26,7 @@ bool FileReader::processFile(const std::string &path, Registry &registry) {
                 registry.addAirplane(airplane.date, airplane.flightNumber, airplane);
             }
         } else {
-            std::cerr << "Error: Failed to read flight record." << std::endl;
+            std::cout << "Error: Failed to read flight record." << std::endl;
             return false;
         }
     }

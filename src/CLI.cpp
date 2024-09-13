@@ -45,7 +45,7 @@ void CLI::executeCommand(const std::string &command) const {
     } else if (command == "exit") {
         std::cout << "Exiting ..." << std::endl;
     } else {
-        std::cerr << "Invalid command. Please, try again." << std::endl;
+        std::cout << "Invalid command. Please, try again." << std::endl;
     }
 }
 
@@ -66,7 +66,7 @@ void CLI::handleCheckCommand() const {
         std::cout << "Enter date (dd.mm.yyyy): ";
         std::getline(std::cin, date);
         if (!isValidDate(date)) {
-            std::cerr << "Invalid date format! Please try again." << std::endl;
+            std::cout << "Invalid date format! Please try again." << std::endl;
         }
     } while (!isValidDate(date));
 
@@ -74,7 +74,7 @@ void CLI::handleCheckCommand() const {
         std::cout << "Enter flight number in uppercase: ";
         std::getline(std::cin, flightNumber);
         if (!isValidFlightNumber(flightNumber)) {
-            std::cerr << "Invalid flight number format! Please try again." << std::endl;
+            std::cout << "Invalid flight number format! Please try again." << std::endl;
         }
     } while (!isValidFlightNumber(flightNumber));
 
@@ -88,7 +88,7 @@ void CLI::handleBookCommand() const {
         std::cout << "Enter date (dd.mm.yyyy): ";
         std::getline(std::cin, date);
         if (!isValidDate(date)) {
-            std::cerr << "Invalid date format! Please try again." << std::endl;
+            std::cout << "Invalid date format! Please try again." << std::endl;
         }
     } while (!isValidDate(date));
 
@@ -96,7 +96,7 @@ void CLI::handleBookCommand() const {
         std::cout << "Enter flight number in uppercase: ";
         std::getline(std::cin, flightNumber);
         if (!isValidFlightNumber(flightNumber)) {
-            std::cerr << "Invalid flight number format! Please try again." << std::endl;
+            std::cout << "Invalid flight number format! Please try again." << std::endl;
         }
     } while (!isValidFlightNumber(flightNumber));
 
@@ -104,15 +104,15 @@ void CLI::handleBookCommand() const {
         std::cout << "Enter seat in uppercase: ";
         std::getline(std::cin, seat);
         if (!isValidSeat(seat)) {
-            std::cerr << "Invalid seat format! Please try again." << std::endl;
+            std::cout << "Invalid seat format! Please try again." << std::endl;
         }
     } while (!isValidSeat(seat));
 
     do {
-        std::cout << "Enter username: ";
+        std::cout << "Enter username (up to 20 symbols without special characters): ";
         std::getline(std::cin, username);
         if (!isValidUsername(username)) {
-            std::cerr << "Invalid username format! Please try again." << std::endl;
+            std::cout << "Invalid username format! Please try again." << std::endl;
         }
     } while (!isValidUsername(username));
 
@@ -121,33 +121,31 @@ void CLI::handleBookCommand() const {
 
 void CLI::handleReturnCommand() const {
     std::string input;
-    int ticketId;
 
     do {
         std::cout << "Enter ticket ID: ";
         std::getline(std::cin, input);
         if (!isValidId(input)) {
-            std::cerr << "Invalid ID! Please try again." << std::endl;
+            std::cout << "Invalid ID! Please try again." << std::endl;
         }
     } while (!isValidId(input));
 
-    ticketId = std::stoi(input);
+    const int ticketId = std::stoi(input);
     commandPerformer->unbook(ticketId);
 }
 
 void CLI::handleViewIdCommand() const {
     std::string input;
-    int ticketId;
 
     do {
         std::cout << "Enter ticket ID: ";
         std::getline(std::cin, input);
         if (!isValidId(input)) {
-            std::cerr << "Invalid ID! Please try again." << std::endl;
+            std::cout << "Invalid ID! Please try again." << std::endl;
         }
     } while (!isValidId(input));
 
-    ticketId = std::stoi(input);
+    const int ticketId = std::stoi(input);
     commandPerformer->view(ticketId);
 }
 
@@ -155,10 +153,10 @@ void CLI::handleViewUserCommand() const {
     std::string username;
 
     do {
-        std::cout << "Enter username: ";
+        std::cout << "Enter username (up to 20 symbols without special characters): ";
         std::getline(std::cin, username);
         if (!isValidUsername(username)) {
-            std::cerr << "Invalid username format! Please try again." << std::endl;
+            std::cout << "Invalid username format! Please try again." << std::endl;
         }
     } while (!isValidUsername(username));
 
@@ -172,7 +170,7 @@ void CLI::handleViewFlightCommand() const {
         std::cout << "Enter date (dd.mm.yyyy): ";
         std::getline(std::cin, date);
         if (!isValidDate(date)) {
-            std::cerr << "Invalid date format! Please try again." << std::endl;
+            std::cout << "Invalid date format! Please try again." << std::endl;
         }
     } while (!isValidDate(date));
 
@@ -180,7 +178,7 @@ void CLI::handleViewFlightCommand() const {
         std::cout << "Enter flight number in uppercase: ";
         std::getline(std::cin, flightNumber);
         if (!isValidFlightNumber(flightNumber)) {
-            std::cerr << "Invalid flight number format! Please try again." << std::endl;
+            std::cout << "Invalid flight number format! Please try again." << std::endl;
         }
     } while (!isValidFlightNumber(flightNumber));
 
@@ -201,7 +199,7 @@ bool CLI::isValidFlightNumber(const std::string &flightNumber) {
 
 
 bool CLI::isValidSeat(const std::string &seat) {
-    const std::regex seatPattern(R"(\d{1,3}[A-F])");
+    const std::regex seatPattern(R"(\d{1,3}[A-Z])");
     return std::regex_match(seat, seatPattern);
 }
 
