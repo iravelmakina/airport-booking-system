@@ -55,7 +55,7 @@ void CommandPerformer::unbook(const int id) const {
                 registry->removeUserTicket(ticket->username, ticket->id);
             } else {
                 std::cout << "Error: Seat " << ticket->seat << " was not booked and cannot be unbooked." << std::endl;
-            }
+            } // check is not necessary
         }
     } else {
         std::cout << "Error: Ticket with ID " << id << " not found." << std::endl;
@@ -77,10 +77,10 @@ void CommandPerformer::view(const int id) const {
 
 void CommandPerformer::view(const std::string &username) const {
     // memory: O(1), time: O(n)
-    const std::unordered_set<int> ticketsId = registry->getUserTickets(username);
-    if (!ticketsId.empty()) {
+    const std::unordered_set<int> *ticketsId = registry->getUserTickets(username);
+    if (ticketsId && !ticketsId->empty()) { // added condition if (ticketsId)
         int index = 1;
-        for (const int id: ticketsId) {
+        for (const int id: *ticketsId) {
             const Ticket *ticket = registry->getTicket(id);
             std::cout << index++ << ". Flight " << ticket->flightNumber << ", " << ticket->date << ", seat " <<
                     ticket->

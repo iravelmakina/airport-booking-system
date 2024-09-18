@@ -19,7 +19,7 @@ void CLI::showMenu() {
             << "exit: Exit\n";
 }
 
-std::string CLI::getCommand() {
+std::string CLI::getCommand() {    // memory: O(1), time: O(n)
     std::string command;
     std::cout << "Command: ";
     std::getline(std::cin, command);
@@ -27,7 +27,8 @@ std::string CLI::getCommand() {
     return command;
 }
 
-void CLI::executeCommand(const std::string &command) const {
+void CLI::executeCommand(const std::string &command) const {    // memory: O(1), time: O(1)
+
     if (command == "check") {
         handleCheckCommand();
     } else if (command == "book") {
@@ -50,7 +51,8 @@ void CLI::executeCommand(const std::string &command) const {
 }
 
 
-void CLI::run() const {
+void CLI::run() const {    // memory: O(1), time: O(n)
+
     std::string command;
     showMenu();
     do {

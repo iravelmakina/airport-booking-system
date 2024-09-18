@@ -5,7 +5,7 @@
 
 // errors
 void Registry::addAirplane(const std::string &date, const std::string &flightNumber, const Airplane &airplane) {
-    const std::string dateFlightNumber = date + "_" + flightNumber; // Concatenate the date and flightNumber
+    const std::string dateFlightNumber = date + "_" + flightNumber; // concatenate the date and flightNumber
     airflightsRegistry[dateFlightNumber] = airplane;
 } // memory: O(1), time: O(1)
 
@@ -55,10 +55,10 @@ void Registry::removeUserTicket(const std::string &username, const int id) {
 } // memory: O(1), time: O(1)
 
 
-std::unordered_set<int> Registry::getUserTickets(const std::string &username) const {
+std::unordered_set<int> *Registry::getUserTickets(const std::string &username) { // used pointer
     const auto ptr = userToTicket.find(username);
     if (ptr != userToTicket.end()) {
-        return ptr->second;
+        return &ptr->second;
     }
-    return {};
+    return nullptr;
 } // memory: O(1), time: O(1)

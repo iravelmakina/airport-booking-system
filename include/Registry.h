@@ -26,5 +26,5 @@ public:
 
     void removeUserTicket(const std::string &username, int id);
 
-    std::unordered_set<int> getUserTickets(const std::string &username) const;
+    std::unordered_set<int> *getUserTickets(const std::string &username);
 };

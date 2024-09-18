@@ -55,7 +55,7 @@ int Airplane::bookSeatGetId(const std::string &seat) {
 }
 
 
-bool Airplane::tryUnbookSeat(const std::string &seat) {
+bool Airplane::tryUnbookSeat(const std::string &seat) { // can be made void
     // memory: O(1), time: O(1)
     const int seatIndex = seatToIndex(seat);
 
