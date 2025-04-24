@@ -49,3 +49,12 @@
   ### Program structure
   
 <img width="1484" alt="Screenshot 2024-09-13 at 15 02 15" src="https://github.com/user-attachments/assets/20e0f7e6-1152-4392-aead-99a57a279ab5">
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contributor
+
+- [@iravelmakina](https://github.com/iravelmakina)
+
